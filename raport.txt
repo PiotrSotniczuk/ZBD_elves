@@ -10,3 +10,23 @@ Początkowo read_commited:
 Update na koncu:
 -skutecznosc 35%
 -okolo 0.16-0.4
+
+Serializacja do upadlego:
+-0.028-0.036
+
+Serializacja maks 5 razy BEST
+- 52%-56%
+- 0.3- 0.7
+
+
+trzeba powtarzac
+albo i=10
+144
+72% 
+0.2-0.2
+153/29sek
+
+kurwa tak posortowane
+5.9 sekundy 83%
+
+najlepiej read_commited XD

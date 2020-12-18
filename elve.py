@@ -9,7 +9,11 @@ NR_OF_MAILS = int(sys.argv[1])
 
 params = config()
 conn = None
-isolation = extensions.ISOLATION_LEVEL_READ_COMMITTED
+
+# READ_COMMITTED
+# REPEATABLE_READ
+# SERIALIZABLE
+isolation = extensions.ISOLATION_LEVEL_SERIALIZABLE
 
 
 def pack_treats(cur, mail, pack_id):
@@ -51,10 +55,13 @@ def pack_treats(cur, mail, pack_id):
 
 def pack_treats_update_last(cur, mail, pack_id):
     to_update = []
+    mail['treats'].sort()
+
     for treat in mail['treats']:
 
         treat_name = treat[0]
         treat_nr = treat[1]
+
         cur.execute("select remaining from in_magazine where treat = %s;", [treat_name])
         remaining = cur.fetchone()[0]
 
@@ -86,6 +93,7 @@ def pack_treats_update_last(cur, mail, pack_id):
 
         to_update.append((treat_nr, treat_name))        
         
+    to_update.sort()
     for tup in to_update:
         cur.execute("update in_magazine set remaining = remaining - %s where treat = %s;", (tup[0], tup[1]))
     
@@ -104,26 +112,31 @@ er = 0
 start = time.time()
 
 for mail in mails:
-    try:
-        conn = connect(**params)
-        # conn.set_isolation_level(isolation)
+    tries = 0
+    while tries < 10:
+        tries += 1
+        try:
+            conn = connect(**params)
+            conn.set_isolation_level(isolation)
 
-        cur = conn.cursor()
-        cur.execute("insert into pack(place, receiver) values (%s,%s) returning id;", (mail["country"], mail["name"]))
-        pack_id = cur.fetchone()[0]
+            cur = conn.cursor()
+            cur.execute("insert into pack(place, receiver) values (%s,%s) returning id;", (mail["country"], mail["name"]))
+            pack_id = cur.fetchone()[0]
 
-        if pack_treats_update_last(cur, mail, pack_id) == True:
-            conn.commit()
-            sucess += 1
-        else:
-            conn.rollback()
-            fail += 1
+            if pack_treats_update_last(cur, mail, pack_id) == True:
+                conn.commit()
+                sucess += 1
+                break
+            else:
+                conn.rollback()
+                fail += 1
+                break
 
-    except (Exception, DatabaseError) as error:
-            print(error)
-            er += 1
-    finally:
+        except (Exception, DatabaseError) as error:
+                print(error)
+                er += 1
+        finally:
             if conn is not None:
                 conn.close()
 
-print("--------SUCC:", sucess, " FAIL:", fail, " ER:", er, " NR/SEK:", NR_OF_MAILS/(time.time()-start),"----------")
+print("--------SUCC:", sucess, " FAIL:", fail, " ER:", er, " SEK:", (time.time()-start),"----------")
