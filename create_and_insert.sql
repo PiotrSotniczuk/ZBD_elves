@@ -30,11 +30,11 @@ create table similar_treat(
     constraint treat_1_treat_2 primary key(treat_1, treat_2)
 );
 
-insert into in_magazine (treat, remaining) values ('zozole', 99);
-insert into in_magazine (treat, remaining) values ('michalki', 99);
-insert into in_magazine (treat, remaining) values ('czekolada gorzka', 99);
-insert into in_magazine (treat, remaining) values ('czekolada mleczna', 99);
-insert into in_magazine (treat, remaining) values ('mietusy', 99);
+insert into in_magazine (treat, remaining) values ('zozole', 999);
+insert into in_magazine (treat, remaining) values ('michalki', 999);
+insert into in_magazine (treat, remaining) values ('czekolada gorzka', 999);
+insert into in_magazine (treat, remaining) values ('czekolada mleczna', 999);
+insert into in_magazine (treat, remaining) values ('mietusy', 999);
 
 insert into similar_treat (treat_1, treat_2, similarity) values ('zozole', 'michalki', 0.5);
 insert into similar_treat (treat_1, treat_2, similarity) values ('zozole', 'mietusy', 0.9);

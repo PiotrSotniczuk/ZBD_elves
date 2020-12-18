@@ -2,8 +2,9 @@
 from psycopg2 import connect, extensions, DatabaseError
 from db_config import config
 from mails_generator import get_mails
+import sys
 
-NR_OF_MAILS = 100
+NR_OF_MAILS = int(sys.argv[1])
 
 params = config()
 conn = None
