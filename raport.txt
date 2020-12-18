@@ -1,0 +1,12 @@
+Początkowo read_commited: 
+20 workerow kazdy po 10 listow
+-deadlock on update in_magazine
+-new row 
+
+-około 25% sie udaje reszta error
+-okolo 0.13-0.24 TR/SEKs
+
+
+Update na koncu:
+-skutecznosc 35%
+-okolo 0.16-0.4
