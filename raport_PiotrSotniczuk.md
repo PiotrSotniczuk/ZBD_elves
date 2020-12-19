@@ -72,47 +72,27 @@ W moim rozwiązaniu updaty są tuż przed commitem, więc adwersarz musiałby zr
 Możnaby z tym walczyć np. zmuszając leniwe elfy do drzemki przed updatem lub stawiając dozorcę pilnującego, aby elf 
 bezzwłocznie po dokananiu updatów spróbował zakomitować zmiany.
 
+# GitHub
+Moje rozwiązanie składa się z 8 plików więc postanowiłem zamieścić link do repozytorium zamiast wszystko wklejać.
+
+[https://github.com/PiotrSotniczuk/ZBD_elves](https://github.com/PiotrSotniczuk/ZBD_elves)
+
+# Porównanie Wykresowe
+Dany raport sporządziłem testując na danych, które można znaleźć w linku. 
+
+W skrócie:
+
+* List składa sie z max 5 różnych typów słodyczy, a każdego typu słodycza może być max 5
+* Jest 7 typów słodyczy każdy ma jakiegoś zamiennika
+* Dane ustawiłem tak, aby po koleji kończyły się typy słodyczy, ale ich zamienniki zawsze się znalazły.
+W ten sposób transakcja zawsze powinna zakończyć się sukcesem lub błędem. 
+Nie byłem pewny jak liczyć transakcje, na które brakuje produktów, więc nie używałem ich przy budowaniu wykresów.
+* Przy wykresach nie używałem także śpiochów.
 
 
 
+![Czas ukończenia zadania](pocz_kon.png)
 
+![Transakcje na sekundę](tran_sek.png)
 
-
-
-
-
-
-
-
-Początkowo read_commited: 
-20 workerow kazdy po 10 listow
--deadlock on update in_magazine
--new row 
-
--około 25% sie udaje reszta error
--okolo 0.13-0.24 TR/SEKs
-
-
-Update na koncu:
--skutecznosc 35%
--okolo 0.16-0.4
-
-Serializacja do upadlego:
--0.028-0.036
-
-Serializacja maks 5 razy BEST
-- 52%-56%
-- 0.3- 0.7
-
-
-trzeba powtarzac
-albo i=10
-144
-72% 
-0.2-0.2
-153/29sek
-
-kurwa tak posortowane
-5.9 sekundy 83%
-
-najlepiej read_commited XD
+![Nieudane transakcje](n_ud.png)

@@ -6,6 +6,7 @@ import sys
 import time
 from packing import pack_treats, pack_treats_sort_update_last
 
+# argumnets 
 NR_OF_MAILS = int(sys.argv[1])
 SLEEP = int(sys.argv[2])
 
